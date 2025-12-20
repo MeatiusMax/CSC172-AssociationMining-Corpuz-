@@ -103,10 +103,10 @@ Overall these findings show the effectiveness of ARM in providing interpretable 
 
 
 ## Ethical Considerations
-This study uses publicly available data and does not involve personal or sensitive user information. However, care must be taken when applying such insights, as over-reliance on data-driven patterns may encourage formulaic creativity or bias against unconventional music styles.
+This study uses publicly available data and does not involve personal or sensitive user information. However, care must be taken when applying such insights, as over-reliance on data-driven patterns may encourage formulaic creativity or bias against unconventional music styles. Spotify being a western application may favor western song, and may underrepresent eastern and local music.
 
 ## Conclusion
-This project demonstrates the effectiveness of ARM in determining patterns related to music popularity. By comparing both popular and unpopular song, we get the differences in feature consistency and diversity.
+This project demonstrates the effectiveness of ARM in determining patterns related to music popularity. By comparing both popular and unpopular song, we get the differences in feature consistency and diversity, and unpopular tracks being more consistent with feature combination than popular ones. This is provides an insight for music artists to see what features determine a songs popularity.
 
 Future work:
 - Incoporate features such as dates and trends
