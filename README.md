@@ -166,9 +166,9 @@ tzdata==2025.3
 wcwidth==0.2.14
 
 ## References
-Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8).
+Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8). 
 
-Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined.
+Dataset [(https://www.kaggle.com/datasets/solomonameh/spotify-music-dataset/data?select=high_popularity_spotify_data.csv)]
 
 ## GitHub Pages
 View this project site: https://github.com/MeatiusMax/CSC172-AssociationMining-Corpuz- [web:32]
