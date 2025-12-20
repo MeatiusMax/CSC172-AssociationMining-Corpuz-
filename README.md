@@ -21,7 +21,7 @@
 
 ## Introduction
 ### Problem Statement
-[Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast mahority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features and metadata that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.]
+[Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast mahority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features and metadata that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.]    
 
 ### Objectives
 - [Objective 1: Convert Spotify features into usable and meaningful categorical bins]
@@ -30,8 +30,10 @@
 - [Objective 4: Generate and compare association rules using support,confidence and lift]
 - [Objective 5: Interpret rules to understand features that define popularity]
 
+![Problem Demo](images/problem_example.gif) [web:41]
+
 ## Related Work
-- [Paper 1: Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined.][web:25]
+- [Paper 1: Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined. ][web:25]
 - [Paper 2: Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8). ]
 - [Gap: Determining features that correlates with popularity using Spotify dataset.] [web:25]
 
@@ -42,39 +44,49 @@
 
 ### Architecture
 ![ARM pipeline]
-- Algorithm: FP Growth
-- Min Support: 0.05
--Categorical Bin Example
-|  Feature | Bin | Category|
-| :--- | :---: | ---: |
-| Energy | 0,0.3,0.7,1.0 | Low, Medium, High |
+
+- **Algorithm**: FP-Growth  
+- **Min Support**: 0.05  
+- **Example Binning**:
+  | Feature     | Bins                     | Labels                     |
+  |-------------|--------------------------|----------------------------|
+  | Energy      | [0, 0.3, 0.7, 1.0]       | Low, Medium, High          |
+
 
 ### Code Snippet
-combined_df['energy_discretize'] = descretize_features(combined_df['energy'], bins=[0, 0.3, 0.7, 1], labels=['low_energy', 'medium_energy', 'high_energy'])
-*********************
+```python
+# Discretize a feature
+combined_df['energy_discretized'] = pd.cut(
+    combined_df['energy'],
+    bins=[0, 0.3, 0.7, 1.0],
+    labels=['low_energy', 'medium_energy', 'high_energy'],
+    include_lowest=True
+)
+
+# Build transactions
 transactions = []
 for _, row in arm_df.iterrows():
     transaction = [f"{col}={row[col]}" for col in arm_df.columns]
     transactions.append(transaction)
-*********************
+
+# Encode and mine
 te = TransactionEncoder()
 te_ary = te.fit(transactions).transform(transactions)
-df = pd.DataFrame(te_ary, columns=te.columns_)
-print("Encoded transactions into a DataFrame.")
-print(df.head())
+df_encoded = pd.DataFrame(te_ary, columns=te.columns_)
 
-
-frequent_itemsets = fpgrowth(df, min_support=0.01, use_colnames=True)
-print("Generated frequent itemsets.")
-print(frequent_itemsets)
+frequent_itemsets = fpgrowth(df_encoded, min_support=0.01, use_colnames=True)
+```
 
 ## Results
-|Song Type|Features|Lift|Confidence|Support
-Unpopular| valence_discretize=low_valence, danceability_discretize=medium_danceability, instrumentalness_discretize=high_instrumentalness, energy_discretize=low_energy, mode_discretize=major|1.54|1.0|0.014
-Popular|speechiness_discretize=low_speechiness, loudness_discretize=high_loudness, energy_discretize=medium_energy, danceability_discretize=high_danceability, tempo_discretize=medium_tempo, liveness_discretize=low_liveness, instrumentalness_discretize=low_instrumentalness, duration_ms_descretize=long_duration|2.09|0.729|0.011
 
--[The FP-growth Algorithm identified frequent association rules for ppoular song. The strongles rule being if the song has low speechiness, high loudness,  medium energy, high danceability, medium tempo, low liveness, low instrumentalness, and long duration then it is bound to be popular. Having Support of 0.011, Confidence of 0.729, and Lift of 2.09.][web:25]
--[The upoular song show highly consistent featur combinations. The top results having low valence, medium danceability, high instrumentalness, low energy,and major mode tend to be unpopular. Having Support of 0.014, Confidence of 1.000, and Lift of 1.54][web:25]
+### Top Association Rules
+
+| Song Type   | Feature Combination                                                                 | Lift | Confidence | Support |
+|-------------|--------------------------------------------------------------------------------------|------|------------|---------|
+| Unpopular   | `acousticness=high, mode=major, duration=medium, instrumentalness=high`              | 1.53 | 0.996      | 0.057   |
+| Popular     | `acousticness=low, speechiness=low, loudness=high, instrumentalness=low, duration=long` | 1.72 | 0.600      | 0.061   |
+
+
 
 ### Demo
 ![Detection Demo](demo/detection.gif)
@@ -82,9 +94,9 @@ Popular|speechiness_discretize=low_speechiness, loudness_discretize=high_loudnes
 
 ## Discussion
 [The result highlights a clear distinction between the popular and unpopular songs in terms of both features and association strength.][web:25]
-[Popular songs are associated with medium tempo, high danceability and medium energy. The low instrumentalness and low speechiness suggest that popular tracks have little vocal and instrumentals but have energetic rythm and tempo that can be choreographed into a dance.][web:25]
-[In contrast, unpopular songs exhibit highly uniform and repetitive feature combinations. The repeated occurrence of low energy, low valence, and high instrumentalness indicates that these tracks tend to be less rhythmically engaging with high usage of instruments and little words spoken. These unpopular rules suggests that whenever these specific feature combinations occur, the songs are always labeled as unpopular within the dataset. However, their lower lift values compared to popular rules indicate that these features are less distinctive and more common across the dataset.][web:25]
-[The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are associated with more rigid and predictable patterns. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.][web:25]
+[Popular songs are associated with low acousticness leaning more electronic or studi produced, loud tracks that contain vocals and are rather on the long side, with low words spoken and not sounding live. Popular songs tend to be loud, vocal-driven, studio-polished, non-acoustic, and relatively long.][web:25]
+[In contrast, unpopular songs exhibit more organic intrumentation, often purely instrumental with major mode. It is neither to short nor long with overall low energy.][web:25]
+[The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.][web:25]
 [Overall these findings show the effectiveness of ARM in providing interpretable insights into music popularity using music features to see what specific features determine popularity.][web:25]
 
 
@@ -92,18 +104,17 @@ Popular|speechiness_discretize=low_speechiness, loudness_discretize=high_loudnes
 [This study uses publicly available data and does not involve personal or sensitive user information. However, care must be taken when applying such insights, as over-reliance on data-driven patterns may encourage formulaic creativity or bias against unconventional music styles.][web:41]
 
 ## Conclusion
-[This project demonstrates the effectiveness of ARM in determining patterns related to music popularity. By comparing both popular and unpopular song, we get the differences in feature consistency and diversity.
+This project demonstrates the effectiveness of ARM in determining patterns related to music popularity. By comparing both popular and unpopular song, we get the differences in feature consistency and diversity.
 
 Future work:
 - Incoporate features such as dates and trends
-- Use data from other platform aside from spotify 
+- Use other platform aside from spotify
 - Mine rules per genre
-]
 
 ## Installation
-Clone repo: git clone https://github.com/MeatiusMax/CSC172-AssociationMining-Corpuz-
-Install deps: pip install -r requirements.txt
-Then run the code
+- git clone https://github.com/MeatiusMax/CSC172-AssociationMining-Corpuz- 
+- Install deps: pip install -r requirements.txt 
+- Then run the code
 
 **requirements.txt:**
 asttokens==3.0.1
@@ -152,13 +163,10 @@ traitlets==5.14.3
 tzdata==2025.3
 wcwidth==0.2.14
 
-
 ## References
-
-Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8). 
+Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8).
 
 Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined.
-
 
 ## GitHub Pages
 View this project site: https://github.com/MeatiusMax/CSC172-AssociationMining-Corpuz- [web:32]
