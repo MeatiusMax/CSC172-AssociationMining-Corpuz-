@@ -1,12 +1,12 @@
 # [Project Title: What makes a music popular: A comparative Association Rule Mining study on popular and unpopular music]
-**CSC173 Intelligent Systems Final Project**  
+**CSC172 Data Mining and Analysis**  
 *Mindanao State University - Iligan Institute of Technology*  
 **Student:** [Joseph Jr. Q. Corpuz], [2020-1360]  
 **Semester:** [e.g., AY 2025-2026 Sem 1]  
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org) [![PyTorch](https://img.shields.io/badge/PyTorch-2.0-orange)](https://pytorch.org)
 
 ## Abstract
-Everyday there are over 120000 songs released, only a small percentage become popular. People have different tastes when it comes to music, some like hard music while others like chill beats. So that begs the question, what makes songs popular?. This project applies ARM (Association Rule Mining) to spotify dataset to identify feature combinations that correlates with the songs popularity. Combining popular and unpopular dataset of song features with both audio features and descriptive features. We preprocessed the data by discretizing the features into interpretable bins making it usable, then apply FP-GROWTH and mined association rules separately for both popular and unpopular song to discover frequent itemsets. The rules-set resulting from the ARM reveals interpretable patterns such as popular song having r&b genre whilst unpopular songs associates with low energy. The result also show that unpopular song exhibit consistent features while popular songs show greater diversity. These findings can be used in creative decision, especially in music production.
+Everyday there are over 120000 songs released, only a small percentage become popular. People have different tastes when it comes to music, some like hard music while others like chill beats. So that begs the question, what makes songs popular?. This project applies ARM (Association Rule Mining) to spotify dataset to identify feature combinations that correlates with the songs popularity. Combining popular and unpopular dataset of song features with both audio features and descriptive features. We preprocessed the data by discretizing the features into interpretable bins making it usable, then apply FP-GROWTH and mined association rules separately for both popular and unpopular song to discover frequent itemsets. The rules-set resulting from the ARM reveals interpretable patterns such as popular song having the feature of being loud whilst unpopular songs associates with high acousticness. The result also show that unpopular song exhibit consistent features while popular songs show greater diversity. These findings can be used in creative decision, especially in music production.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -21,7 +21,7 @@ Everyday there are over 120000 songs released, only a small percentage become po
 
 ## Introduction
 ### Problem Statement
-Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast mahority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features and metadata that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.    
+Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast majority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.    
 
 ### Objectives
 - [Objective 1: Convert Spotify features into usable and meaningful categorical bins]
@@ -32,7 +32,7 @@ Music streaming platforms like spotify shape how millions of users discover and 
 
 ## Related Work
 - Paper 1: Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined.
-- [Paper 2: Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8). ]
+- Paper 2: Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8).
 - Gap: Determining features that correlates with popularity using Spotify dataset.
 
 ## Methodology
@@ -72,7 +72,7 @@ te = TransactionEncoder()
 te_ary = te.fit(transactions).transform(transactions)
 df_encoded = pd.DataFrame(te_ary, columns=te.columns_)
 
-frequent_itemsets = fpgrowth(df_encoded, min_support=0.01, use_colnames=True)
+frequent_itemsets = fpgrowth(df_encoded, min_support=0.05, use_colnames=True)
 ```
 
 ## Results
@@ -97,7 +97,7 @@ Popular songs are associated with low acousticness leaning more electronic or st
 
 In contrast, unpopular songs exhibit more organic intrumentation, often purely instrumental with major mode. It is neither to short nor long with overall low energy.
 
-The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.
+The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values far below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.
 
 Overall these findings show the effectiveness of ARM in providing interpretable insights into music popularity using music features to see what specific features determine popularity.
 
