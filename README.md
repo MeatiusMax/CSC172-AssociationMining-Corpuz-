@@ -6,7 +6,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org) [![PyTorch](https://img.shields.io/badge/PyTorch-2.0-orange)](https://pytorch.org)
 
 ## Abstract
-[Everyday there are over 120000 songs released, only a small percentage become popular. People have different tastes when it comes to music, some like hard music while others like chill beats. So that begs the question, what makes songs popular?. This project applies ARM (Association Rule Mining) to spotify dataset to identify feature combinations that correlates with the songs popularity. Combining popular and unpopular dataset of song features with both audio features and descriptive features. We preprocessed the data by discretizing the features into interpretable bins making it usable, then apply FP-GROWTH and mined association rules separately for both popular and unpopular song to discover frequent itemsets. The rules-set resulting from the ARM reveals interpretable patterns such as popular song having r&b genre whilst unpopular songs associates with low energy. The result also show that unpopular song exhibit consistent features while popular songs show greater diversity. These findings can be used in creative decision, especially in music production.][web:25][web:41]
+Everyday there are over 120000 songs released, only a small percentage become popular. People have different tastes when it comes to music, some like hard music while others like chill beats. So that begs the question, what makes songs popular?. This project applies ARM (Association Rule Mining) to spotify dataset to identify feature combinations that correlates with the songs popularity. Combining popular and unpopular dataset of song features with both audio features and descriptive features. We preprocessed the data by discretizing the features into interpretable bins making it usable, then apply FP-GROWTH and mined association rules separately for both popular and unpopular song to discover frequent itemsets. The rules-set resulting from the ARM reveals interpretable patterns such as popular song having r&b genre whilst unpopular songs associates with low energy. The result also show that unpopular song exhibit consistent features while popular songs show greater diversity. These findings can be used in creative decision, especially in music production.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -21,7 +21,7 @@
 
 ## Introduction
 ### Problem Statement
-[Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast mahority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features and metadata that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.]    
+Music streaming platforms like spotify shape how millions of users discover and listen to music. With over 120000 music uploaded every single day, only some ever make to popular mainstream music. The vast mahority of small music artists from all around the world often struggle to make it to the top. But it begs the question, What does these mainstream, popular music have that makes them popular?. This project addresses this gap by applying ARM to uncover hidden, data-driven patterns in spotify features and metadata that occurs with popularity. By identifying such patters, this aims to provide insights that can help artists make creative decisions and improve their chances at making it to the mainstream music.    
 
 ### Objectives
 - [Objective 1: Convert Spotify features into usable and meaningful categorical bins]
@@ -30,17 +30,15 @@
 - [Objective 4: Generate and compare association rules using support,confidence and lift]
 - [Objective 5: Interpret rules to understand features that define popularity]
 
-![Problem Demo](images/problem_example.gif) [web:41]
-
 ## Related Work
-- [Paper 1: Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined. ][web:25]
+- Paper 1: Dominic, D. D., Azween, B. & Abdullah, A. (2009). A Comparative Study of FP-growth Variations. undefined.
 - [Paper 2: Sidhu, S., Meena, U. K., Nawani, A., Gupta, H. & Thakur, N. (2014). FP Growth Algorithm Implementation. undefined, 93(8). ]
-- [Gap: Determining features that correlates with popularity using Spotify dataset.] [web:25]
+- Gap: Determining features that correlates with popularity using Spotify dataset.
 
 ## Methodology
 ### Dataset
 - Source: [(https://www.kaggle.com/datasets/solomonameh/spotify-music-dataset/data?select=high_popularity_spotify_data.csv)]
-- Preprocessing: remove duplicates and missing values, Discretized numerical features into categorical bins, encde each track as a transaction of items.[web:41]
+- Preprocessing: remove duplicates and missing values, Discretized numerical features into categorical bins, encde each track as a transaction of items.
 
 ### Architecture
 ![ARM pipeline]
@@ -93,15 +91,19 @@ frequent_itemsets = fpgrowth(df_encoded, min_support=0.01, use_colnames=True)
 [Video: [CSC173_YourLastName_Final.mp4](demo/CSC173_YourLastName_Final.mp4)] [web:41]
 
 ## Discussion
-[The result highlights a clear distinction between the popular and unpopular songs in terms of both features and association strength.][web:25]
-[Popular songs are associated with low acousticness leaning more electronic or studi produced, loud tracks that contain vocals and are rather on the long side, with low words spoken and not sounding live. Popular songs tend to be loud, vocal-driven, studio-polished, non-acoustic, and relatively long.][web:25]
-[In contrast, unpopular songs exhibit more organic intrumentation, often purely instrumental with major mode. It is neither to short nor long with overall low energy.][web:25]
-[The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.][web:25]
-[Overall these findings show the effectiveness of ARM in providing interpretable insights into music popularity using music features to see what specific features determine popularity.][web:25]
+The result highlights a clear distinction between the popular and unpopular songs in terms of both features and association strength.
+
+Popular songs are associated with low acousticness leaning more electronic or studio produced, loud tracks that contain vocals and are rather on the long duration side, with low words spoken and not sounding live. Popular songs tend to be loud, vocal-driven, studio-polished, non-acoustic, and relatively long.
+
+In contrast, unpopular songs exhibit more organic intrumentation, often purely instrumental with major mode. It is neither to short nor long with overall low energy.
+
+The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.
+
+Overall these findings show the effectiveness of ARM in providing interpretable insights into music popularity using music features to see what specific features determine popularity.
 
 
 ## Ethical Considerations
-[This study uses publicly available data and does not involve personal or sensitive user information. However, care must be taken when applying such insights, as over-reliance on data-driven patterns may encourage formulaic creativity or bias against unconventional music styles.][web:41]
+This study uses publicly available data and does not involve personal or sensitive user information. However, care must be taken when applying such insights, as over-reliance on data-driven patterns may encourage formulaic creativity or bias against unconventional music styles.
 
 ## Conclusion
 This project demonstrates the effectiveness of ARM in determining patterns related to music popularity. By comparing both popular and unpopular song, we get the differences in feature consistency and diversity.
