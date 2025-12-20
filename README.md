@@ -93,9 +93,9 @@ frequent_itemsets = fpgrowth(df_encoded, min_support=0.05, use_colnames=True)
 ## Discussion
 The result highlights a clear distinction between the popular and unpopular songs in terms of both features and association strength.
 
-Popular songs are associated with low acousticness and low instrumentalness, meaning it has a lot of vocals. It is loud are rather on the long duration side and not sounding live. In short Popular songs tend to be loud, mostly vocal, non-acoustic, and relatively long.
+Popular songs are associated with low acousticness and low instrumentalness, meaning it has a lot of vocals. It is loud and have long duration and not recorded live. In short Popular songs tend to be loud, mostly vocal, non-acoustic, and relatively long.
 
-In contrast, unpopular songs exhibit is more acoustic in a major mode. Songs are usually in medium duration with the track entirely lacking in vocals. In short unpopular song are more acoustic, medium length, with no vocals and only music.
+In contrast, unpopular songs exhibit is more acoustic it mode being major keys. Songs are usually in medium duration with the track entirely lacking in vocals. In short unpopular song are more acoustic, medium length, with no vocals and only music.
 
 The difference in confidence levels between popular and unpopular rules is notable. Popular rules show confidence values far below 1.0, reflecting greater variability and diversity among popular songs, whereas unpopular songs are almost 1.0 nearest being 0.996. This supports the idea that popularity is not driven by a single fixed audio formula, while unpopularity is often associated with constrained musical characteristics.
 
