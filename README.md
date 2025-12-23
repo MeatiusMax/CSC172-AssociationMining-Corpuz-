@@ -43,7 +43,7 @@ Music streaming platforms like spotify shape how millions of users discover and 
 ### Architecture
 ![ARM pipeline]
 
-- **Algorithm**: FP-Growth  
+- **Algorithm**: FP-Growth for  faster and more memory-efficient, especially for large or dense datasets such as this.
 - **Min Support**: 0.05  
 - **Example Binning**:
   | Feature     | Bins                     | Labels                     |
@@ -88,7 +88,7 @@ frequent_itemsets = fpgrowth(df_encoded, min_support=0.05, use_colnames=True)
 
 ### Demo
 ![Detection Demo](demo/detection.gif)
-[Video: [CSC173_YourLastName_Final.mp4](demo/CSC173_YourLastName_Final.mp4)] [web:41]
+[Video: [CSC173_Corpuz_Final.mp4](demo/CSC173_Corpuz_Final.mp4)] [web:41]
 
 ## Discussion
 The result highlights a clear distinction between the popular and unpopular songs in terms of both features and association strength.
